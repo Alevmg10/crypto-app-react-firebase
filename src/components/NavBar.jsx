@@ -32,10 +32,11 @@ const NavBar = () => {
         <div className='hidden md:block'>
             <ThemeToggle/>
         </div>
+        
         {user?.email ? (
-          <div>
-            <Link to='/account' className='p-4'>Account</Link>
-            <button onClick={handleSignOut}>Sign Out</button>
+          <div className='flex'>
+            <Link to='/account' className='p-4 hidden md:block'>Account</Link>
+            <button onClick={handleSignOut} className='hidden md:block'>Sign Out</button>
           </div>
         ) : (
           <div className='hidden md:block'>
@@ -62,10 +63,16 @@ const NavBar = () => {
               <ThemeToggle/>
             </li>
           </ul>
-          <div className='flex flex-col w-full p-4'>
-            <Link to='/signin' onClick={handleNav} ><button className='w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl'>Sign In</button></Link>
-            <Link to='/signup' onClick={handleNav} ><button className='w-full my-2 p-3 bg-button text-button text-btnText rounded-2xl shadow-xl'>Sign Up</button></Link>
-          </div>
+          {user?.email ? (
+            <div onClick={handleNav} className='w-full p-4'>
+              <button onClick={handleSignOut} className="w-full my-2 p-3 bg-button text-button text-btnText rounded-2xl shadow-xl" >Sign Out</button>
+            </div>
+          ) : (
+            <div className='flex flex-col w-full p-4'>
+              <Link to='/signin' onClick={handleNav} ><button className='w-full my-2 p-3 bg-primary text-primary border border-secondary rounded-2xl shadow-xl'>Sign In</button></Link>
+              <Link to='/signup' onClick={handleNav} ><button className='w-full my-2 p-3 bg-button text-button text-btnText rounded-2xl shadow-xl'>Sign Up</button></Link>
+            </div>
+          )}
         </div>
     </div>
   );

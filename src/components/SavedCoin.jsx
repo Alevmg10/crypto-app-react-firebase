@@ -14,14 +14,14 @@ const SavedCoin = () => {
       onSnapshot(doc(db, 'users', `${user.email}`), (doc) => {
         setCoins(doc.data()?.watchList)
       })
-    },[user.email])
+    },[user?.email])
 
     const coinPath = doc(db, 'users', `${user.email}`)
     const deleteCoin = async (passedid) => {
       try {
         const result = coins.filter((item) => item.id !== passedid)
         await updateDoc(coinPath, {
-          watchList: result
+          watchList: result,
         })
       } catch(e) {
         console.log(e.message)
@@ -30,7 +30,7 @@ const SavedCoin = () => {
 
   return (
     <div>
-      {coins.length === 0 ? (<p>
+      {coins?.length === 0 ? (<p>
           You don't have any coins saved. Please save a coin to add it to your
           watch list. <Link to='/'>Click here to search coins</Link>
       </p>) : (
@@ -43,7 +43,7 @@ const SavedCoin = () => {
               </tr>
             </thead>
             <tbody>
-              {coins.map((coin) => (
+              {coins?.map((coin) => (
                 <tr key={coin.id} className='h-[60px] overflow-hidden'>
                   <td>{coin?.rank}</td>
                   <td>
